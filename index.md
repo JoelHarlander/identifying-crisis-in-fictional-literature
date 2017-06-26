@@ -1,37 +1,19 @@
-## Welcome to GitHub Pages
+## In this project I look at how we can extract context from fictional literature, and identify if we can get information about real world events.
 
-You can use the [editor on GitHub](https://github.com/JoelHarlander/identifying-crisis-in-fictional-literature/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+We will be using the same data that the [Ngram Viewer](https://books.google.com/ngrams)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+# 1. Getting the data
+Using XPath and Requests libraries for python I downloaded all the files that met the following requirements:
+- English
+- data from fictional books
+By default Requests loads all the data into memory before writing it, some of the files were larger than  12GB so the stream option was needed to write the files to disk blocks at a time.
+Data located here: http://storage.googleapis.com/books/ngrams/books/datasetsv2.html
 
-### Markdown
+#2. Loading the data into a PostgreSQL database
+We now have a multitude of compressed Tab Separated files(TSV's) containing our data.
+To extract each one would be a pain, we know each file contains only one CSV so it makes sense to programmatically do this.
+Line by line I extracted the TSV's and inserted them into the database directly.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Our data now looks like this:
+![Top 1000 rows](images/1000.png)
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/JoelHarlander/identifying-crisis-in-fictional-literature/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
